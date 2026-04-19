@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(crontab -l)",
+      "Read(//etc/cron.d/**)",
+      "Bash(bash /opt/containers/healthcheck.sh)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(journalctl -u cron --since \"1 hour ago\")",
+      "Read(//etc/**)",
+      "Bash(systemctl status:*)",
+      "WebSearch",
+      "Bash(gh api:*)",
+      "Bash(tmux capture-pane *)",
+      "Bash(tmux send-keys *)",
+      "Bash(tmux kill-session *)",
+      "Bash(tmux new-session *)"
+    ]
+  }
+}

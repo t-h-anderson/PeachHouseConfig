@@ -74,6 +74,14 @@ ssh -i /root/.ssh/id_rsa tomhanderson@192.168.68.62 \
     automations.yaml configuration.yaml scripts.yaml scenes.yaml custom_sentences/" \
   2>/dev/null | tar -xzf - -C "$REPO/homeassistant/" 2>/dev/null || true
 
+# --- Claude Code global config (~/.claude/) ---
+# Backs up global instructions, custom commands, and MCP settings
+# Excludes cache, sessions, history, and memory (projects/) — too large/ephemeral
+mkdir -p "$REPO/claude"
+cp ~/.claude/CLAUDE.md "$REPO/claude/CLAUDE.md" 2>/dev/null || true
+cp ~/.claude/settings.local.json "$REPO/claude/settings.local.json" 2>/dev/null || true
+rsync -a --delete ~/.claude/commands/ "$REPO/claude/commands/" 2>/dev/null || true
+
 # --- Commit and push ---
 cd "$REPO"
 git add -A
