@@ -1,0 +1,9 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    privileged: true
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./data:/root/.ollama
+    restart: unless-stopped

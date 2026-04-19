@@ -1,0 +1,48 @@
+#!/bin/bash
+
+SIGNAL_API="http://localhost:8080"
+SIGNAL_NUMBER="+447963511525"
+
+# Pinned-version images (immich postgres) are excluded — updated by Immich explicitly
+# Locally-built images (desktop-bot, ollama-proxy) are excluded
+IMAGES=(
+  "adguard/adguardhome:latest"
+  "bbernhard/signal-cli-rest-api:latest"
+  "caddy:latest"
+  "ghcr.io/flaresolverr/flaresolverr:latest"
+  "ghcr.io/gethomepage/homepage:latest"
+  "ghcr.io/immich-app/immich-machine-learning:release"
+  "ghcr.io/immich-app/immich-server:release"
+  "ghcr.io/openclaw/openclaw:latest"
+  "lscr.io/linuxserver/bazarr:latest"
+  "lscr.io/linuxserver/code-server:latest"
+  "lscr.io/linuxserver/overseerr:latest"
+  "lscr.io/linuxserver/prowlarr:latest"
+  "lscr.io/linuxserver/qbittorrent:latest"
+  "lscr.io/linuxserver/radarr:latest"
+  "lscr.io/linuxserver/sonarr:latest"
+  "ollama/ollama:latest"
+  "plexinc/pms-docker:latest"
+  "qmcgaw/gluetun:latest"
+  "redis:6.2-alpine"
+  "syncthing/syncthing:latest"
+)
+
+UPDATED=()
+
+for image in "${IMAGES[@]}"; do
+  before=$(docker inspect --format='{{.Id}}' "$image" 2>/dev/null || echo "none")
+  if docker pull -q "$image" > /dev/null 2>&1; then
+    after=$(docker inspect --format='{{.Id}}' "$image" 2>/dev/null || echo "none")
+    if [ "$before" != "$after" ]; then
+      UPDATED+=("$image")
+    fi
+  fi
+done
+
+if [ ${#UPDATED[@]} -gt 0 ]; then
+  list=$(printf '• %s\n' "${UPDATED[@]}")
+  curl -s -X POST "$SIGNAL_API/v2/send" \
+    -H "Content-Type: application/json" \
+    -d "{\"number\": \"$SIGNAL_NUMBER\", \"recipients\": [\"$SIGNAL_NUMBER\"], \"message\": \"🔄 peachhouse: image updates pulled:\n${list}\n\nRun docker-compose pull && docker-compose up -d to apply.\"}" > /dev/null
+fi

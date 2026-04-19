@@ -1,0 +1,18 @@
+title: Peachhouse
+theme: dark
+color: slate
+headerStyle: clean
+
+layout:
+  Media:
+    style: row
+    columns: 2
+  Infrastructure:
+    style: row
+    columns: 3
+  Comms:
+    style: row
+    columns: 2
+  Smart Home:
+    style: row
+    columns: 2

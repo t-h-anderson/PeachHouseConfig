@@ -1,0 +1,73 @@
+- Media:
+    - Plex:
+        icon: plex.png
+        href: http://192.168.68.16:32400/web
+        description: PeachyPlex
+        server: my-docker
+        container: plex
+        widget:
+          type: plex
+          url: http://192.168.68.16:32400
+          key: QAyCt7sNbd-ozqP6BLAX
+
+    - Immich:
+        icon: immich.png
+        href: http://immich.ph
+        description: Photo library (~95k assets)
+        server: my-docker
+        container: immich-server
+        widget:
+          type: immich
+          url: http://192.168.68.16:2283
+          key: l2NOuHnPXOpT3FeAJjGQ1iAgicI8bXUFVGsouWB78
+          version: 2
+
+- Infrastructure:
+    - AdGuard Home:
+        icon: adguard-home.png
+        href: http://192.168.68.16:3001
+        description: DNS ad blocking
+        server: my-docker
+        container: adguard-adguard-1
+        widget:
+          type: adguard
+          url: http://192.168.68.16:3001
+          username: tom.harper.anderson@gmail.com
+          password: 8ynp5WFBJqAvqrw
+
+    - Syncthing:
+        icon: syncthing.png
+        href: http://192.168.68.16:8384
+        description: Signal backup sync
+        server: my-docker
+        container: syncthing-syncthing-1
+        widget:
+          type: syncthing
+          url: http://192.168.68.16:8384
+          key: fcrAgYk6raEdCZcDuGW3AW3HEJAfR9sw
+
+    - Caddy:
+        icon: caddy.png
+        href: http://192.168.68.16:2019
+        description: Reverse proxy
+        server: my-docker
+        container: caddy-caddy-1
+
+- Comms:
+    - Signal API:
+        icon: signal.png
+        href: http://192.168.68.16:8080
+        description: Signal REST API
+        server: my-docker
+        container: signal-signal-api-1
+
+    - Signal Backups:
+        icon: signal.png
+        href: http://signal.ph
+        description: Decoded Signal backup viewer
+
+- Smart Home:
+    - Home Assistant:
+        icon: home-assistant.png
+        href: http://ha.ph
+        description: HAOS VM

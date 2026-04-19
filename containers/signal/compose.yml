@@ -1,0 +1,11 @@
+services:
+  signal-api:
+    image: bbernhard/signal-cli-rest-api:latest
+    privileged: true
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/home/.local/share/signal-cli
+    environment:
+      - MODE=normal
+    restart: unless-stopped

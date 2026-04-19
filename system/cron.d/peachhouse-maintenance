@@ -1,0 +1,2 @@
+5 3 * * * root /usr/local/bin/backup-config >> /var/log/backup-config.log 2>&1
+5 3 * * * root /usr/local/bin/check-updates >> /var/log/check-updates.log 2>&1

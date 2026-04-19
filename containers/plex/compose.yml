@@ -1,0 +1,15 @@
+services:
+  plex:
+    image: plexinc/pms-docker:latest
+    container_name: plex
+    privileged: true
+    network_mode: host
+    ports:
+      - "32400:32400"
+    environment:
+      - PLEX_UID=1000
+      - PLEX_GID=1000
+    volumes:
+      - /opt/containers/plex/config:/config
+      - /mnt/peach_storage:/data
+    restart: unless-stopped

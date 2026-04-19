@@ -1,0 +1,25 @@
+  - id: '1775747284672'
+    alias: Server Power Loss Alert
+    description: ''
+    triggers:
+    - entity_id: sensor.servershelly_power
+      below: 10
+      for: 00:00:30
+      trigger: numeric_state
+    conditions:
+    - condition: state
+      entity_id: switch.servershelly
+      state: 'on'
+    actions:
+    - action: notify.signal_tom
+      data:
+        message: '⚠️ peachhouse: server power draw near 0W — may have crashed'
+    mode: single
+
+  - alias: Heartbeat
+    triggers:
+    - trigger: time_pattern
+      minutes: "/5"
+    actions:
+    - action: rest_command.heartbeat
+    mode: single

@@ -1,0 +1,14 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    privileged: true
+    ports:
+      - 3002:3000
+    volumes:
+      - ./config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /mnt/peach_storage:/mnt/peach_storage:ro
+    environment:
+      - HOMEPAGE_ALLOWED_HOSTS=home.ph,192.168.68.16:3002
+    restart: unless-stopped

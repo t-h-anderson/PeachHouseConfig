@@ -1,0 +1,18 @@
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    privileged: true
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/London
+      - PASSWORD=${CODE_SERVER_PASSWORD}
+      - DEFAULT_WORKSPACE=/opt
+    volumes:
+      - ./config:/config
+      - /opt:/opt
+      - /mnt/peach_storage:/mnt/peach_storage
+    ports:
+      - 8444:8443
+    restart: unless-stopped

@@ -1,0 +1,19 @@
+[desktop]
+ip = "100.74.78.70"
+mac = "04-D9-F5-D6-25-5D"
+
+[ports]
+# Port this proxy listens on — should match what clients expect from Ollama
+proxyPort = 11435
+# Port Ollama listens on on the desktop
+ollamaPort = 11434
+# Port the desktop agent listens on
+agentPort = 5001
+
+[timeouts]
+# Seconds to wait for the desktop to boot and Ollama to respond after WoL
+wakeTimeoutSeconds = 120
+# Seconds between boot-wait polls
+wakePollIntervalSeconds = 5
+# Seconds the agent HTTP calls are allowed before we give up
+agentRequestTimeoutSeconds = 5

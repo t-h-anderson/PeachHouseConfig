@@ -1,0 +1,66 @@
+{
+  "models": {
+    "providers": {
+      "ollama": {
+        "baseUrl": "http://192.168.68.16:11434",
+        "api": "ollama",
+        "models": [
+          {
+            "id": "qwen2.5:1.5b-ctx32k",
+            "name": "Qwen 2.5 1.5B (server fallback)",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 32768,
+            "maxTokens": 32768
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "ollama/qwen2.5:1.5b-ctx32k"
+      },
+      "compaction": {
+        "reserveTokensFloor": 4096
+      }
+    }
+  },
+  "plugins": {
+    "entries": {
+      "ollama": {
+        "enabled": true
+      }
+    }
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.4.10",
+    "lastTouchedAt": "2026-04-11T19:03:08.407Z"
+  },
+  "gateway": {
+    "controlUi": {
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789",
+        "http://openclaw.ph",
+        "https://peachhouse.tail047806.ts.net"
+      ],
+      "dangerouslyDisableDeviceAuth": true
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "8636623213:AAGUKVCMGZ3GDf39UKBhvnxzA5vCKaNzf0k"
+    }
+  }
+}

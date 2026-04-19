@@ -1,0 +1,34 @@
+services:
+  openclaw-gateway:
+    image: ${OPENCLAW_IMAGE:-ghcr.io/openclaw/openclaw:latest}
+    privileged: true
+    ports:
+      - "18789:18789"
+      - "18790:18790"
+    environment:
+      - OPENCLAW_GATEWAY_TOKEN
+      - TZ=${OPENCLAW_TZ:-Europe/London}
+    volumes:
+      - ./config:/home/node/.openclaw
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:18789/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  openclaw-cli:
+    image: ${OPENCLAW_IMAGE:-ghcr.io/openclaw/openclaw:latest}
+    network_mode: service:openclaw-gateway
+    environment:
+      - OPENCLAW_GATEWAY_TOKEN
+      - TZ=${OPENCLAW_TZ:-Europe/London}
+      - BROWSER=echo
+    volumes:
+      - ./config:/home/node/.openclaw
+    depends_on:
+      - openclaw-gateway
+    stdin_open: true
+    tty: true
+    profiles:
+      - cli

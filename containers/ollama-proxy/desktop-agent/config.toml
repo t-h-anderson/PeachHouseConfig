@@ -1,0 +1,18 @@
+[ports]
+agentPort = 5001
+
+[timeouts]
+# Seconds of user idle time required before the proxy may shut the machine down
+idleThresholdSeconds = 300
+# Seconds given to the user to cancel before Windows actually shuts down
+shutdownWarningSeconds = 60
+# How stale the activity file can be before we consider the monitor dead
+activityStalenessSeconds = 30
+
+[monitor]
+# How often session_monitor.py writes the activity file (seconds)
+pollIntervalSeconds = 5
+
+[paths]
+# Shared state file between session_monitor.py and desktop_agent.py
+stateFile = "C:/ProgramData/OllamaAgent/activity.json"

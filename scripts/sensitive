@@ -1,0 +1,77 @@
+#!/bin/bash
+# Unified entry point for sensitive photo management.
+# Place at /usr/local/bin/sensitive and chmod +x.
+
+MANAGE="python3 /opt/sensitive-photos/sensitive-manage.py"
+EXTRACT="python3 /opt/sensitive-photos/sensitive-extract.py"
+
+cmd="${1:-help}"
+shift 2>/dev/null
+
+case "$cmd" in
+    mount)      $MANAGE mount-all ;;
+    unmount)    $MANAGE unmount-all ;;
+    status)     $MANAGE status ;;
+    extract)    $EXTRACT "$@" ;;
+    refresh)    $EXTRACT --repair-thumbs "$@" ;;
+
+    add)        $MANAGE add-category "$@" ;;
+    remove)     $MANAGE remove-category "$@" ;;
+
+    mount-one)  $MANAGE mount "$@" ;;
+    unmount-one) $MANAGE unmount "$@" ;;
+
+    help|--help|-h)
+        cat << 'HELP'
+
+  sensitive — encrypted photo category management for Immich
+  ──────────────────────────────────────────────────────────
+
+  DAILY USE
+    sensitive mount            Mount all categories (prompts for password)
+    sensitive unmount          Unmount all categories
+    sensitive status           Show mount state of all categories
+    sensitive extract          Move tagged assets in/out of encrypted storage
+    sensitive extract --dry-run  Preview what extract would do
+    sensitive refresh          Check and repair thumbnail locations for sensitive assets
+    sensitive refresh --dry-run  Preview what refresh would do
+
+  CATEGORY MANAGEMENT
+    sensitive add <name>       Create a new encrypted category (e.g. passport)
+    sensitive remove <name>    Remove a category (keeps encrypted data by default)
+    sensitive remove <name> --delete-data   Permanently delete encrypted data
+
+  SINGLE CATEGORY
+    sensitive mount-one <name>    Mount one category only
+    sensitive unmount-one <name>  Unmount one category only
+
+  WORKFLOW
+    1. Tag a photo 'sensitive:passport' in the Immich UI
+    2. Run:  sensitive extract
+    3. Photo moves to encrypted storage; disappears when unmounted
+
+    To restore a photo to normal storage:
+    1. Remove the 'sensitive:*' tag in the Immich UI
+    2. Run:  sensitive extract
+
+  STORAGE LOCATIONS
+    Encrypted vaults:   /mnt/peach_storage/sensitive/<category>/encrypted/
+    Decrypted mount:    /mnt/peach_storage/sensitive/<category>/plain/
+    Scripts:            /opt/sensitive-photos/
+    Auto-unmount:       systemd timer fires at 3am daily
+
+  TIPS
+    - All categories share one password — use the same one for all
+    - Run 'sensitive extract' after tagging, before unmounting
+    - The 3am auto-unmount runs even if you forget
+    - Add new categories any time with 'sensitive add <name>'
+
+HELP
+        ;;
+
+    *)
+        echo "Unknown command: $cmd"
+        echo "Run 'sensitive help' for usage."
+        exit 1
+        ;;
+esac

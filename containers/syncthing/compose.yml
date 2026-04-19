@@ -1,0 +1,16 @@
+services:
+  syncthing:
+    image: syncthing/syncthing:latest
+    privileged: true
+    environment:
+      - PUID=0
+      - PGID=0
+    volumes:
+      - ./data:/var/syncthing
+      - /mnt/peach_storage/syncthing:/sync
+    ports:
+      - "8384:8384"   # web UI
+      - "22000:22000" # sync protocol (TCP)
+      - "22000:22000/udp" # sync protocol (UDP)
+      - "21027:21027/udp" # local discovery
+    restart: unless-stopped

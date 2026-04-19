@@ -1,0 +1,181 @@
+power_cycle_server:
+  alias: Power Cycle Server
+  sequence:
+  - action: switch.turn_off
+    target:
+      entity_id: switch.servershelly
+  - delay: 00:00:10
+  - action: switch.turn_on
+    target:
+      entity_id: switch.servershelly
+  mode: single
+  description: ''
+morning_summary:
+  alias: Morning Summary
+  sequence:
+  - alias: Morning Summary
+    sequence:
+    - action: weather.get_forecasts
+      target:
+        entity_id: weather.forecast_home
+      data:
+        type: daily
+      response_variable: forecast_data
+    - action: tts.speak
+      target:
+        entity_id: tts.piper
+      data:
+        media_player_entity_id: media_player.browser_mod_6d5b1f7c_4dddcc4b
+        message: '{% set today = forecast_data[''weather.forecast_home''].forecast[0]
+          %} {% set wind = state_attr(''weather.forecast_home'', ''wind_speed'') |
+          default(0) | round(0) %} Good morning. It is currently {{ state_attr(''weather.forecast_home'',
+          ''temperature'') | default(''unknown'') }} degrees in Waterbeach with {{
+          states(''weather.forecast_home'') | replace(''_'', '' '') }}. Wind speed
+          is {{ wind }} kilometres per hour. Today''s high will be {{ today.temperature
+          | round(0) }}, low {{ today.templow | round(0) }}. {% if today.precipitation
+          > 0.5 %} Expect around {{ today.precipitation }} millimetres of rain. {%
+          else %} No significant rain expected. {% endif %}
+
+          '
+  description: ''
+ai_morning_summary:
+  alias: Weather Summary
+  sequence:
+  - variables:
+      at_home: '{{ states(''device_tracker.fairphone_6'') == ''home'' }}'
+  - if:
+    - condition: template
+      value_template: '{{ at_home }}'
+    then:
+    - action: weather.get_forecasts
+      target:
+        entity_id: weather.forecast_home
+      data:
+        type: daily
+      response_variable: forecast_data
+    - variables:
+        current_temp: '{{ state_attr(''weather.forecast_home'', ''temperature'') |
+          round(0) | int }}'
+        condition: '{{ states(''weather.forecast_home'') | replace(''_'', '' '') }}'
+        wind: '{{ state_attr(''weather.forecast_home'', ''wind_speed'') | float }}'
+        high: '{{ forecast_data[''weather.forecast_home''].forecast[0].temperature
+          | round(0) | int }}'
+        low: '{{ forecast_data[''weather.forecast_home''].forecast[0].templow | round(0)
+          | int }}'
+        rain: '{{ forecast_data[''weather.forecast_home''].forecast[0].precipitation
+          | float }}'
+        location_raw: Waterbeach
+    else:
+    - action: rest_command.open_meteo_forecast
+      data:
+        latitude: '{{ state_attr(''device_tracker.fairphone_6'', ''latitude'') }}'
+        longitude: '{{ state_attr(''device_tracker.fairphone_6'', ''longitude'') }}'
+      response_variable: away_weather
+    - variables:
+        current_temp: '{{ away_weather.content.current.temperature_2m | round(0) |
+          int }}'
+        condition: '{{ away_weather.content.current.weather_code | int | string }}'
+        wind: '{{ away_weather.content.current.wind_speed_10m | float }}'
+        high: '{{ away_weather.content.daily.temperature_2m_max[0] | round(0) | int
+          }}'
+        low: '{{ away_weather.content.daily.temperature_2m_min[0] | round(0) | int
+          }}'
+        rain: '{{ away_weather.content.daily.precipitation_sum[0] | float }}'
+        location_raw: '{{ states(''sensor.fairphone_6_geocoded_location'') }}'
+  - variables:
+      greeting: '{% set h = now().hour %} {% if h < 12 %}Good morning{% elif h < 18
+        %}Good afternoon{% else %}Good evening{% endif %}'
+      wind_desc: '{% set w = wind | float %} {% if w < 15 %}calm{% elif w < 30 %}breezy{%
+        elif w < 50 %}windy{% else %}very windy{% endif %}'
+      rain_desc: '{% set r = rain | float %} {% if r < 0.5 %}dry skies{% elif r <
+        5 %}light rain{% elif r < 15 %}moderate rain{% else %}heavy rain{% endif %}'
+      location: '{% set parts = location_raw.split('','') %} {% if parts | length
+        >= 2 %}{{ parts[1].strip().split('' '')[0] }}{% else %}{{ location_raw }}{%
+        endif %}'
+      condition_display: "{% set wmo = {\n  '0': 'clear', '1': 'mainly clear', '2':
+        'partly cloudy', '3': 'overcast',\n  '45': 'foggy', '48': 'foggy', '51': 'drizzly',
+        '53': 'drizzly',\n  '55': 'drizzly', '61': 'rainy', '63': 'rainy', '65': 'rainy',\n
+        \ '71': 'snowy', '73': 'snowy', '75': 'snowy',\n  '80': 'showery', '81': 'showery',
+        '82': 'showery',\n  '95': 'stormy', '96': 'stormy', '99': 'stormy'\n} %} {%
+        if condition in wmo %}{{ wmo[condition] }}{% else %}{{ condition }}{% endif
+        %}"
+      temp_word: '{% set ones = [''zero'',''one'',''two'',''three'',''four'',''five'',''six'',''seven'',''eight'',''nine'',''ten'',''eleven'',''twelve'',''thirteen'',''fourteen'',''fifteen'',''sixteen'',''seventeen'',''eighteen'',''nineteen'',''twenty'']
+        %} {% set n = current_temp | int %} {% if n >= 0 and n <= 20 %}{{ ones[n]
+        }}{% elif n > 20 and n <= 30 %}twenty-{{ ones[n - 20] }}{% elif n < 0 and
+        n >= -20 %}minus {{ ones[-n] }}{% else %}{{ n }}{% endif %}'
+      high_word: '{% set ones = [''zero'',''one'',''two'',''three'',''four'',''five'',''six'',''seven'',''eight'',''nine'',''ten'',''eleven'',''twelve'',''thirteen'',''fourteen'',''fifteen'',''sixteen'',''seventeen'',''eighteen'',''nineteen'',''twenty'']
+        %} {% set n = high | int %} {% if n >= 0 and n <= 20 %}{{ ones[n] }}{% elif
+        n > 20 and n <= 30 %}twenty-{{ ones[n - 20] }}{% elif n < 0 and n >= -20 %}minus
+        {{ ones[-n] }}{% else %}{{ n }}{% endif %}'
+      low_word: '{% set ones = [''zero'',''one'',''two'',''three'',''four'',''five'',''six'',''seven'',''eight'',''nine'',''ten'',''eleven'',''twelve'',''thirteen'',''fourteen'',''fifteen'',''sixteen'',''seventeen'',''eighteen'',''nineteen'',''twenty'']
+        %} {% set n = low | int %} {% if n >= 0 and n <= 20 %}{{ ones[n] }}{% elif
+        n > 20 and n <= 30 %}twenty-{{ ones[n - 20] }}{% elif n < 0 and n >= -20 %}minus
+        {{ ones[-n] }}{% else %}{{ n }}{% endif %}'
+  - action: calendar.get_events
+    target:
+      entity_id:
+      - calendar.tom_harper_anderson_gmail_com
+      - calendar.work
+      - calendar.bins_schedule
+      - calendar.birthdays
+    data:
+      start_date_time: '{{ now().strftime(''%Y-%m-%dT00:00:00'') }}'
+      end_date_time: '{{ now().strftime(''%Y-%m-%dT23:59:59'') }}'
+    response_variable: calendar_data
+  - variables:
+      calendar_sentence: '{% set ns = namespace(events=[]) %} {% for cal, data in
+        calendar_data.items() %} {% for event in data.events %} {% if event.start
+        | length <= 10 %} {% set ns.events = ns.events + [event.summary ~ '', all
+        day''] %} {% elif as_timestamp(event.end) - as_timestamp(event.start) >= 86400
+        %} {% set ns.events = ns.events + [event.summary ~ '', all day''] %} {% else
+        %} {% set t = as_datetime(event.start).strftime(''%-I:%M %p'') | regex_replace('':00
+        '', '' '') %} {% set ns.events = ns.events + [event.summary ~ '' at '' ~ t]
+        %} {% endif %} {% endfor %} {% endfor %} {% if ns.events %}Your calendar:
+        {{ ns.events | join(''; '') }}.{% else %}Nothing in your calendar today.{%
+        endif %}'
+  - action: conversation.process
+    data:
+      agent_id: conversation.ollama_conversation_2
+      text: 'Complete this spoken weather report by filling in the placeholders. Output
+        only the completed text, nothing else.
+
+
+        ''[GREETING] in [LOCATION]. It is [SKY] and [WIND] with a current temperature
+        of [TEMP] degrees. Expect a high of [HIGH] and a low of [LOW] today, with
+        [RAIN].''
+
+
+        Values:
+
+        GREETING={{ greeting }}
+
+        LOCATION={{ location }}
+
+        SKY={{ condition_display }}
+
+        WIND={{ wind_desc }}
+
+        TEMP={{ temp_word }}
+
+        HIGH={{ high_word }}
+
+        LOW={{ low_word }} # replaced low }}
+
+        RAIN={{ rain_desc }}
+
+
+        Write all numbers as words. Do not add or remove any sentences.'
+    response_variable: llm_response
+  - action: tts.speak
+    target:
+      entity_id: tts.piper
+    data:
+      media_player_entity_id: media_player.browser_mod_6d5b1f7c_4dddcc4b
+      message: '{{ llm_response.response.speech.plain.speech }} {{ calendar_sentence
+        }}'
+  - action: notify.signal_tom
+    metadata: {}
+    data:
+      message: '{{ llm_response.response.speech.plain.speech }} {{ calendar_sentence
+        }}'
+  description: ''

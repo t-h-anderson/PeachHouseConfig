@@ -1,0 +1,12 @@
+# /opt/containers/caddy/docker-compose.yml
+services:
+  caddy:
+    image: caddy:latest
+    network_mode: host
+    privileged: true
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - /mnt/peach_storage/signal-decoded:/mnt/peach_storage/signal-decoded:ro
+volumes:
+  caddy_data:

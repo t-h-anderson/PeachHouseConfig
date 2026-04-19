@@ -1,0 +1,11 @@
+services:
+  ollama-proxy:
+    build: .
+    container_name: ollama-proxy
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    volumes:
+      - ./config.toml:/app/config.toml:ro
+    environment:
+      - PYTHONUNBUFFERED=1

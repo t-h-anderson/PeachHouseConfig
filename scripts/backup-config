@@ -1,0 +1,84 @@
+#!/bin/bash
+set -euo pipefail
+
+REPO="/opt/peachhouse-config"
+SIGNAL_API="http://localhost:8080"
+SIGNAL_NUMBER="+447963511525"
+
+fail() {
+  curl -s -X POST "$SIGNAL_API/v2/send" \
+    -H "Content-Type: application/json" \
+    -d "{\"number\": \"$SIGNAL_NUMBER\", \"recipients\": [\"$SIGNAL_NUMBER\"], \"message\": \"⚠️ peachhouse: config backup failed: $1\"}" > /dev/null
+  exit 1
+}
+
+# --- Containers ---
+
+# compose.yml from every service dir
+find /opt/containers -maxdepth 2 -name 'compose.yml' | while read -r f; do
+  svc=$(basename "$(dirname "$f")")
+  mkdir -p "$REPO/containers/$svc"
+  cp "$f" "$REPO/containers/$svc/compose.yml"
+done
+
+# Specific extras beyond compose files
+cp /opt/containers/healthcheck.sh "$REPO/containers/"
+cp /opt/containers/caddy/Caddyfile "$REPO/containers/caddy/"
+
+# Homepage config (manually curated — worth backing up in full, logs excluded)
+rsync -a --delete --exclude='logs/' /opt/containers/homepage/config/ "$REPO/containers/homepage/config/"
+
+# OpenClaw agent config (excludes runtime workspace)
+mkdir -p "$REPO/containers/openclaw/config"
+cp /opt/containers/openclaw/config/openclaw.json "$REPO/containers/openclaw/config/" 2>/dev/null || true
+
+# desktop-bot source (it's a mini project, not just compose)
+mkdir -p "$REPO/containers/desktop-bot"
+for f in bot.py Dockerfile README.md compose.yml; do
+  [ -f "/opt/containers/desktop-bot/$f" ] && cp "/opt/containers/desktop-bot/$f" "$REPO/containers/desktop-bot/$f"
+done
+
+# ollama-proxy source (exclude .git and __pycache__)
+rsync -a --delete \
+  --exclude='.git' --exclude='__pycache__/' \
+  /opt/containers/ollama-proxy/ "$REPO/containers/ollama-proxy/"
+
+# signalbackup-tools Dockerfile
+mkdir -p "$REPO/containers/signalbackup-tools"
+cp /opt/containers/signalbackup-tools/Dockerfile "$REPO/containers/signalbackup-tools/"
+
+# AdGuard config (just the main config, not runtime state)
+mkdir -p "$REPO/containers/adguard/conf"
+cp /opt/containers/adguard/conf/AdGuardHome.yaml "$REPO/containers/adguard/conf/" 2>/dev/null || true
+
+# --- Utility scripts (signal-decode excluded — contains Signal backup passphrase) ---
+# Copies all files in /usr/local/bin/ automatically; new scripts are included without changes here
+mkdir -p "$REPO/scripts"
+find /usr/local/bin -maxdepth 1 -type f ! -name 'signal-decode' | while read -r f; do
+  cp "$f" "$REPO/scripts/$(basename "$f")"
+done
+
+# --- System config ---
+mkdir -p "$REPO/system/cron.d"
+cp /etc/fstab "$REPO/system/fstab"
+cp /etc/samba/smb.conf "$REPO/system/smb.conf"
+cp /etc/cron.d/container-healthcheck "$REPO/system/cron.d/" 2>/dev/null || true
+cp /etc/cron.d/peachhouse-maintenance "$REPO/system/cron.d/"
+
+# --- Home Assistant (via SSH — HA add-on doesn't support SFTP, use tar over SSH) ---
+# secrets.yaml excluded; custom_sentences/ included
+mkdir -p "$REPO/homeassistant"
+ssh -i /root/.ssh/id_rsa tomhanderson@192.168.68.62 \
+  "tar -czf - -C /homeassistant \
+    --exclude=secrets.yaml \
+    automations.yaml configuration.yaml scripts.yaml scenes.yaml custom_sentences/" \
+  2>/dev/null | tar -xzf - -C "$REPO/homeassistant/" 2>/dev/null || true
+
+# --- Commit and push ---
+cd "$REPO"
+git add -A
+if git diff --cached --quiet; then
+  exit 0
+fi
+git commit -m "Nightly backup $(date '+%Y-%m-%d %H:%M')"
+git push origin main || fail "git push"

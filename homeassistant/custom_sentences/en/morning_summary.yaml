@@ -1,0 +1,8 @@
+language: "en"
+intents:
+  MorningSummary:
+    data:
+      - sentences:
+        - "morning summary"
+        - "give me my morning summary"
+        - "what is my morning summary"

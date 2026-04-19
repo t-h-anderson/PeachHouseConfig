@@ -1,0 +1,264 @@
+[2026-04-09T18:17:59.519Z] info: kubernetes.yaml was copied to the config folder
+[2026-04-09T18:32:54.793Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.807Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.809Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.811Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.866Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.868Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.869Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.896Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.897Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.899Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.920Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T18:32:55.921Z] error: Host validation failed for: 192.168.68.16:3002. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2026-04-09T19:26:13.883Z] info: bookmarks.yaml was copied to the config folder
+[2026-04-09T19:26:13.884Z] info: proxmox.yaml was copied to the config folder
+[2026-04-09T19:26:13.888Z] info: custom.css was copied to the config folder
+[2026-04-09T19:26:13.888Z] info: custom.js was copied to the config folder
+[2026-04-09T19:26:13.968Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:14.158Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:26:14.159Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:26:16.988Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:20.088Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:23.176Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:26.275Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:29.361Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:32.449Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:35.535Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:38.684Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:42.034Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:45.138Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:48.237Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:51.340Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:54.434Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:26:57.536Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:00.653Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:03.741Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:06.841Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:09.930Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:13.044Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:16.154Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:19.238Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:22.406Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:25.530Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:28.641Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:31.752Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:34.895Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:38.026Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:41.170Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:44.270Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:47.382Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:50.472Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:53.568Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:56.680Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:27:59.781Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:02.989Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:06.082Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:09.194Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:12.273Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:15.362Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:18.472Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:21.628Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:24.742Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:27.837Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:31.058Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:34.159Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:37.231Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:40.314Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:43.416Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:46.822Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:50.010Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:53.226Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:56.311Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:28:59.491Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:02.579Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:05.771Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:08.952Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:11.464Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:11.543Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:29:11.579Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:29:13.623Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:16.732Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:19.972Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:22.689Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:22.903Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:29:22.926Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:29:26.117Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:30.766Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:34.323Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:37.447Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:39.515Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:29:39.516Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:29:40.736Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:43.820Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:46.912Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:50.011Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:53.102Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:55.610Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:29:55.717Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:29:55.730Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:29:57.698Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:00.872Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:03.965Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:07.063Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:08.896Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:30:08.899Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:30:10.177Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:13.300Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:16.445Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:19.666Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:22.859Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:25.992Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:29.093Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:32.222Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:35.362Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:38.461Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:41.584Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:44.682Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:47.826Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:51.011Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:54.132Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:30:57.272Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:00.360Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:03.442Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:06.540Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:09.676Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:12.761Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:15.842Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:18.941Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:22.065Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:25.201Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:28.283Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:31.401Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:34.531Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:37.622Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:40.702Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:43.831Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:46.933Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:50.010Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:53.101Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:56.181Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:31:59.330Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:02.421Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:05.511Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:08.609Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:11.791Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:14.881Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:17.961Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:21.059Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:24.212Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:27.292Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:30.383Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:33.562Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:36.631Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:39.821Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:32:41.593Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:32:41.593Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:33:42.943Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:33:43.004Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:33:43.034Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:33:43.409Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:33:43.611Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:33:43.615Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:33:46.463Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:33:49.546Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:33:50.904Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:33:51.061Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:33:51.062Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:33:53.970Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:33:57.077Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:33:59.173Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:33:59.286Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:33:59.334Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:34:01.663Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:04.762Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:07.854Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:10.959Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:15.128Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:15.373Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:34:15.442Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:34:37.976Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:38.109Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:34:38.155Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:34:39.700Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:39.871Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:34:39.919Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:34:42.720Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:45.841Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:48.763Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:48.907Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:34:48.938Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:34:51.943Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:55.034Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:34:55.726Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:34:55.733Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:34:58.124Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:01.210Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:04.324Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:07.419Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:10.537Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:13.624Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:16.841Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:19.932Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:23.048Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:26.322Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:29.578Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:32.698Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:35.818Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:39.919Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:35:59.754Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:07.443Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:12.373Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:15.471Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:18.614Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:21.732Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:24.831Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:27.942Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:31.100Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:34.213Z] warn: <resources> Drive not found for target: /mnt/peach_storage
+[2026-04-09T19:36:45.712Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:36:45.712Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:36:46.276Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:36:46.276Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:36:52.075Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:36:52.167Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:37:00.834Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:37:00.835Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:37:38.083Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:37:38.084Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:37:41.176Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:37:41.268Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:38:20.531Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:38:20.531Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:38:23.064Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:38:23.065Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:38:30.205Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:38:30.212Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:38:49.744Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:38:49.745Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:44:22.833Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:44:22.835Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-09T19:54:20.884Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-09T19:54:20.885Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-10T06:47:07.646Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-10T06:47:07.646Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-10T06:47:21.796Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-10T06:47:21.797Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-15T17:17:23.124Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-15T17:17:23.126Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-15T20:54:45.908Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-15T20:54:45.910Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-16T19:48:52.735Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-16T19:48:52.736Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-16T19:49:06.271Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-16T19:49:06.271Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-17T07:08:07.965Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-17T07:08:07.970Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-17T07:08:18.257Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-17T07:08:18.269Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-17T09:46:04.264Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-17T09:46:04.265Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-18T13:15:27.220Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-18T13:15:27.223Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats
+[2026-04-18T13:51:01.797Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/version
+[2026-04-18T13:51:01.797Z] error: <credentialedProxyHandler> HTTP Error 404 calling http://192.168.68.16:2283/api/server-info/stats

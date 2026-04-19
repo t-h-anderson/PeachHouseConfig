@@ -1,0 +1,48 @@
+http://home.ph {
+    reverse_proxy localhost:3002
+}
+
+http://immich.ph {
+    reverse_proxy localhost:2283
+}
+
+http://ha.ph {
+    reverse_proxy 192.168.68.62:8123
+}
+
+http://signal.ph {
+    root * /mnt/peach_storage/signal-decoded
+    file_server
+}
+
+http://qbittorrent.ph {
+    reverse_proxy localhost:8090
+}
+
+http://prowlarr.ph {
+    reverse_proxy localhost:9696
+}
+
+http://radarr.ph {
+    reverse_proxy localhost:7878
+}
+
+http://sonarr.ph {
+    reverse_proxy localhost:8989
+}
+
+http://overseerr.ph {
+    reverse_proxy localhost:5055
+}
+
+http://bazarr.ph {
+    reverse_proxy localhost:6767
+}
+
+http://code.ph {
+    reverse_proxy localhost:8444
+}
+
+http://openclaw.ph {
+    reverse_proxy localhost:18789
+}

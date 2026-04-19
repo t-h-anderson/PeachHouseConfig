@@ -1,0 +1,16 @@
+- resources:
+    cpu: true
+    memory: true
+    disk: /
+    label: host
+
+- resources:
+    disk: /mnt/peach_storage
+    label: peach_storage
+
+- datetime:
+    text_size: xl
+    format:
+      dateStyle: short
+      timeStyle: short
+      hourCycle: h23

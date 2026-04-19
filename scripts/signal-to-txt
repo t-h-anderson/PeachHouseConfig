@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+# Converts signal-decoded HTML conversations to plain text files.
+# Output mirrors the input directory structure under OUTPUT_DIR.
+
+import os
+import sys
+from html.parser import HTMLParser
+
+INPUT_DIR = "/mnt/peach_storage/signal-decoded"
+OUTPUT_DIR = "/mnt/peach_storage/signal-txt"
+
+
+class ConvoParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.messages = []
+        self.title = ""
+        self._in_title = False
+        self._in_pre = False
+        self._in_msg_data = False
+        self._current_direction = None  # "in" or "out"
+        self._current_text = []
+        self._current_time = None
+        self._depth_stack = []  # track open tags
+        self._msg_depth = None  # depth when msg div opened
+
+    def handle_starttag(self, tag, attrs):
+        classes = dict(attrs).get("class", "")
+        self._depth_stack.append(tag)
+        depth = len(self._depth_stack)
+
+        if tag == "title":
+            self._in_title = True
+        elif tag == "div" and "msg-incoming" in classes and "msg-date-change" not in classes:
+            self._current_direction = "in"
+            self._msg_depth = depth
+            self._current_text = []
+            self._current_time = None
+        elif tag == "div" and "msg-outgoing" in classes:
+            self._current_direction = "out"
+            self._msg_depth = depth
+            self._current_text = []
+            self._current_time = None
+        elif tag == "pre" and self._current_direction:
+            self._in_pre = True
+        elif tag == "span" and "msg-data" in classes and self._current_direction:
+            self._in_msg_data = True
+
+    def handle_endtag(self, tag):
+        if self._depth_stack:
+            self._depth_stack.pop()
+        depth = len(self._depth_stack)
+
+        if tag == "title":
+            self._in_title = False
+        elif tag == "pre":
+            self._in_pre = False
+        elif tag == "span":
+            self._in_msg_data = False
+        elif tag == "div" and self._msg_depth is not None and depth < self._msg_depth:
+            # Closed the message div
+            if self._current_direction and self._current_text:
+                self.messages.append((
+                    self._current_direction,
+                    self._current_time or "",
+                    "".join(self._current_text).strip()
+                ))
+            self._current_direction = None
+            self._msg_depth = None
+            self._current_text = []
+            self._current_time = None
+
+    def handle_data(self, data):
+        if self._in_title:
+            self.title += data
+        elif self._in_pre and self._current_direction is not None:
+            self._current_text.append(data)
+        elif self._in_msg_data and self._current_direction is not None:
+            self._current_time = data.strip()
+
+
+def convert_html(html_path, txt_path, convo_name):
+    with open(html_path, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    parser = ConvoParser()
+    parser.feed(html)
+
+    if not parser.messages:
+        return 0
+
+    lines = [f"Conversation: {convo_name}", "=" * 60, ""]
+    for direction, timestamp, text in parser.messages:
+        label = "Me" if direction == "out" else convo_name
+        lines.append(f"[{timestamp}] {label}:")
+        lines.append(text)
+        lines.append("")
+
+    os.makedirs(os.path.dirname(txt_path), exist_ok=True)
+    with open(txt_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+
+    return len(parser.messages)
+
+
+def main():
+    if not os.path.isdir(INPUT_DIR):
+        print(f"Input dir not found: {INPUT_DIR}")
+        sys.exit(1)
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    total_convos = 0
+    total_msgs = 0
+
+    for entry in sorted(os.listdir(INPUT_DIR)):
+        convo_dir = os.path.join(INPUT_DIR, entry)
+        if not os.path.isdir(convo_dir):
+            continue
+
+        # Find the HTML file inside the convo dir
+        html_files = [f for f in os.listdir(convo_dir) if f.endswith(".html")]
+        if not html_files:
+            continue
+
+        html_path = os.path.join(convo_dir, html_files[0])
+        # Strip the (_idN) suffix from the name for a cleaner filename
+        convo_name = entry.split(" (_id")[0]
+        txt_filename = convo_name + ".txt"
+        txt_path = os.path.join(OUTPUT_DIR, txt_filename)
+
+        count = convert_html(html_path, txt_path, convo_name)
+        if count:
+            print(f"  {convo_name}: {count} messages")
+            total_convos += 1
+            total_msgs += count
+
+    print(f"\nDone. {total_convos} conversations, {total_msgs} messages.")
+    print(f"Output: {OUTPUT_DIR}")
+
+
+if __name__ == "__main__":
+    main()

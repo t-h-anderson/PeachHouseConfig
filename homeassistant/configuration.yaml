@@ -1,0 +1,55 @@
+ # Loads default set of integrations. Do not remove.
+  default_config:
+
+  frontend:
+    themes: !include_dir_merge_named themes
+
+  automation: !include automations.yaml
+  script: !include scripts.yaml
+  scene: !include scenes.yaml
+
+  http:
+    use_x_forwarded_for: true
+    trusted_proxies:
+      - 192.168.68.16
+
+  rest_command:
+    heartbeat:
+      url: "https://hc-ping.com/2faacb5c-5c83-4cc1-a8dc-8adc98e3b251"
+      method: GET
+    open_meteo_forecast:
+      url: "https://api.open-meteo.com/v1/forecast?latitude={{ latitude }}&longitude={{ longitude
+  }}&current=temperature_2m,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=auto&forecast_days=1"
+      method: GET
+
+  notify:
+    - name: signal_tom
+      platform: rest
+      resource: http://192.168.68.16:8080/v2/send
+      method: POST_JSON
+      headers:
+        Content-Type: application/json
+      data:
+        number: "+447963511525"
+        recipients:
+          - "+447963511525"
+    - name: signal_nadia
+      platform: rest
+      resource: http://192.168.68.16:8080/v2/send
+      method: POST_JSON
+      headers:
+        Content-Type: application/json
+      data:
+        number: "+447963511525"
+        recipients:
+          - "+447551035656"
+
+  intent_script:
+    MorningSummary:
+      speech:
+        text: "Playing your morning summary."
+      action:
+        - action: script.morning_summary
+  google:
+    client_id: !secret google_client_id
+    client_secret: !secret google_client_secret
