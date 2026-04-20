@@ -187,7 +187,7 @@ filtering:
     - domain: openclaw.ph
       answer: 192.168.68.16
       enabled: true
-    - domain: openclaw.ph
+    - domain: grafana.ph
       answer: 192.168.68.16
       enabled: true
   safe_fs_patterns:

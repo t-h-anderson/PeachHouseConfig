@@ -1,3 +1,11 @@
+(cf_tls) {
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+	}
+}
+
+# ── .ph (LAN / Tailnet, HTTP) ─────────────────────────────────────────────────
+
 http://home.ph {
     reverse_proxy localhost:3002
 }
@@ -45,4 +53,76 @@ http://code.ph {
 
 http://openclaw.ph {
     reverse_proxy localhost:18789
+}
+
+http://grafana.ph {
+    reverse_proxy localhost:3000
+}
+
+# ── peach-house.uk (HTTPS via Cloudflare DNS-01) ──────────────────────────────
+
+home.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:3002
+}
+
+immich.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:2283
+}
+
+ha.peach-house.uk {
+    import cf_tls
+    reverse_proxy 192.168.68.62:8123
+}
+
+signal.peach-house.uk {
+    import cf_tls
+    root * /mnt/peach_storage/signal-decoded
+    file_server
+}
+
+download.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:8090
+}
+
+indexers.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:9696
+}
+
+films.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:7878
+}
+
+tv.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:8989
+}
+
+mediasearch.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:5055
+}
+
+subtitles.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:6767
+}
+
+code.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:8444
+}
+
+openclaw.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:18789
+}
+
+grafana.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:3000
 }

@@ -24,6 +24,7 @@ done
 # Specific extras beyond compose files
 cp /opt/containers/healthcheck.sh "$REPO/containers/"
 cp /opt/containers/caddy/Caddyfile "$REPO/containers/caddy/"
+cp /opt/containers/caddy/Dockerfile "$REPO/containers/caddy/"
 
 # Homepage config (manually curated — worth backing up in full, logs excluded)
 rsync -a --delete --exclude='logs/' /opt/containers/homepage/config/ "$REPO/containers/homepage/config/"
@@ -50,6 +51,11 @@ cp /opt/containers/signalbackup-tools/Dockerfile "$REPO/containers/signalbackup-
 # AdGuard config (just the main config, not runtime state)
 mkdir -p "$REPO/containers/adguard/conf"
 cp /opt/containers/adguard/conf/AdGuardHome.yaml "$REPO/containers/adguard/conf/" 2>/dev/null || true
+
+# Monitoring stack config (pve.yml excluded — contains Proxmox API token)
+mkdir -p "$REPO/containers/monitoring"
+cp /opt/containers/monitoring/prometheus.yml "$REPO/containers/monitoring/" 2>/dev/null || true
+rsync -a --delete /opt/containers/monitoring/grafana/provisioning/ "$REPO/containers/monitoring/grafana/provisioning/" 2>/dev/null || true
 
 # --- Utility scripts (signal-decode excluded — contains Signal backup passphrase) ---
 # Copies all files in /usr/local/bin/ automatically; new scripts are included without changes here
