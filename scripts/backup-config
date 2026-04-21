@@ -50,6 +50,10 @@ for f in scraper.py monzo.py Dockerfile import-session.py compose.yml .env.examp
   [ -f "/opt/containers/finance-scraper/$f" ] && cp "/opt/containers/finance-scraper/$f" "$REPO/containers/finance-scraper/$f"
 done
 
+# signal-adapter source
+mkdir -p "$REPO/containers/signal-adapter"
+cp /opt/containers/signal-adapter/adapter.py "$REPO/containers/signal-adapter/adapter.py" 2>/dev/null || true
+
 # signalbackup-tools Dockerfile
 mkdir -p "$REPO/containers/signalbackup-tools"
 cp /opt/containers/signalbackup-tools/Dockerfile "$REPO/containers/signalbackup-tools/"
