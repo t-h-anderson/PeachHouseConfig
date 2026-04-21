@@ -66,6 +66,82 @@
         href: http://signal.ph
         description: Decoded Signal backup viewer
 
+- Downloads:
+    - Overseerr:
+        icon: overseerr.png
+        href: http://overseerr.ph
+        description: Media requests
+        server: my-docker
+        container: overseerr
+        widget:
+          type: overseerr
+          url: http://192.168.68.16:5055
+          key: MTc3NTgzMDkzMjA1Mjc1OTNlZjc4LTEzODQtNGJkYS1iZWFhLTRhNDM5MWYwMzU0NQ==
+
+    - Radarr:
+        icon: radarr.png
+        href: http://radarr.ph
+        description: Film management
+        server: my-docker
+        container: radarr
+        widget:
+          type: radarr
+          url: http://192.168.68.16:7878
+          key: 0a0f775ac12c4fd5ae685f36e05078f9
+
+    - Sonarr:
+        icon: sonarr.png
+        href: http://sonarr.ph
+        description: TV management
+        server: my-docker
+        container: sonarr
+        widget:
+          type: sonarr
+          url: http://192.168.68.16:8989
+          key: 20c0a95fd88144d18179321f85cc8dda
+
+    - Prowlarr:
+        icon: prowlarr.png
+        href: http://prowlarr.ph
+        description: Indexer management
+        server: my-docker
+        container: prowlarr
+        widget:
+          type: prowlarr
+          url: http://192.168.68.16:9696
+          key: c8084267e33d429395116f343b04f8b5
+
+    - Bazarr:
+        icon: bazarr.png
+        href: http://bazarr.ph
+        description: Subtitle management
+        server: my-docker
+        container: bazarr
+        widget:
+          type: bazarr
+          url: http://192.168.68.16:6767
+          key: 12cffb31eb66bdca4dc2cfc53b860e9c
+
+    - qBittorrent:
+        icon: qbittorrent.png
+        href: http://qbittorrent.ph
+        description: Torrent client (via VPN)
+        server: my-docker
+        container: qbittorrent
+
+- Monitoring:
+    - Grafana:
+        icon: grafana.png
+        href: http://grafana.ph
+        description: Dashboards & metrics
+        server: my-docker
+        container: grafana
+        widget:
+          type: grafana
+          url: http://192.168.68.16:3000
+          username: admin
+          password: admin
+
 - Smart Home:
     - Home Assistant:
         icon: home-assistant.png

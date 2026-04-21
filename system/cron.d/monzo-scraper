@@ -1,0 +1,1 @@
+0 */6 * * * root python3 /opt/containers/finance-scraper/monzo.py >> /var/log/monzo-scraper.log 2>&1

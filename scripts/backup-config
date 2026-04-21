@@ -46,7 +46,7 @@ rsync -a --delete \
 
 # finance-scraper source (scraper, Dockerfile, import helper — excludes state/session/screenshots)
 mkdir -p "$REPO/containers/finance-scraper"
-for f in scraper.py Dockerfile import-session.py compose.yml .env.example; do
+for f in scraper.py monzo.py Dockerfile import-session.py compose.yml .env.example; do
   [ -f "/opt/containers/finance-scraper/$f" ] && cp "/opt/containers/finance-scraper/$f" "$REPO/containers/finance-scraper/$f"
 done
 
@@ -83,6 +83,7 @@ cp /etc/samba/smb.conf "$REPO/system/smb.conf"
 cp /etc/cron.d/container-healthcheck "$REPO/system/cron.d/" 2>/dev/null || true
 cp /etc/cron.d/peachhouse-maintenance "$REPO/system/cron.d/"
 cp /etc/cron.d/finance-scraper "$REPO/system/cron.d/" 2>/dev/null || true
+cp /etc/cron.d/monzo-scraper "$REPO/system/cron.d/" 2>/dev/null || true
 
 # --- Home Assistant (via SSH — HA add-on doesn't support SFTP, use tar over SSH) ---
 # secrets.yaml excluded; custom_sentences/ included

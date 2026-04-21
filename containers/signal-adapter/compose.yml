@@ -1,0 +1,14 @@
+services:
+  signal-adapter:
+    image: python:3.12-alpine
+    privileged: true
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./adapter.py:/adapter.py:ro
+    environment:
+      - SIGNAL_API=http://192.168.68.16:8080
+      - SIGNAL_ACCOUNT=+447873395430
+      - PORT=8082
+    command: python /adapter.py
+    restart: unless-stopped
