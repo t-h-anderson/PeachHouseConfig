@@ -11,6 +11,8 @@ services:
     volumes:
       - ./vm-data:/storage
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    environment:
+      - HA_TOKEN=${HA_TOKEN}
     command:
       - --storageDataPath=/storage
       - --promscrape.config=/etc/prometheus/prometheus.yml

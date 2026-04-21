@@ -55,7 +55,13 @@ cp /opt/containers/adguard/conf/AdGuardHome.yaml "$REPO/containers/adguard/conf/
 # Monitoring stack config (pve.yml excluded — contains Proxmox API token)
 mkdir -p "$REPO/containers/monitoring"
 cp /opt/containers/monitoring/prometheus.yml "$REPO/containers/monitoring/" 2>/dev/null || true
+cp /opt/containers/monitoring/.env "$REPO/containers/monitoring/.env" 2>/dev/null || true
 rsync -a --delete /opt/containers/monitoring/grafana/provisioning/ "$REPO/containers/monitoring/grafana/provisioning/" 2>/dev/null || true
+
+# .env secrets files (sensitive — repo must remain private)
+for svc in arr code-server immich openclaw; do
+  [ -f "/opt/containers/$svc/.env" ] && cp "/opt/containers/$svc/.env" "$REPO/containers/$svc/.env"
+done
 
 # --- Utility scripts (signal-decode excluded — contains Signal backup passphrase) ---
 # Copies all files in /usr/local/bin/ automatically; new scripts are included without changes here
