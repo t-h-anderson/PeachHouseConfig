@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  finance-scraper:
+    build: .
+    container_name: finance-scraper
+    privileged: true
+    restart: "no"
+    volumes:
+      - /opt/textfiles:/opt/textfiles
+      - ./state:/state
+    env_file: .env

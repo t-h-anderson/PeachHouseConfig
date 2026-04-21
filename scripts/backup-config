@@ -44,6 +44,12 @@ rsync -a --delete \
   --exclude='.git' --exclude='__pycache__/' \
   /opt/containers/ollama-proxy/ "$REPO/containers/ollama-proxy/"
 
+# finance-scraper source (scraper, Dockerfile, import helper — excludes state/session/screenshots)
+mkdir -p "$REPO/containers/finance-scraper"
+for f in scraper.py Dockerfile import-session.py compose.yml .env.example; do
+  [ -f "/opt/containers/finance-scraper/$f" ] && cp "/opt/containers/finance-scraper/$f" "$REPO/containers/finance-scraper/$f"
+done
+
 # signalbackup-tools Dockerfile
 mkdir -p "$REPO/containers/signalbackup-tools"
 cp /opt/containers/signalbackup-tools/Dockerfile "$REPO/containers/signalbackup-tools/"
@@ -59,7 +65,7 @@ cp /opt/containers/monitoring/.env "$REPO/containers/monitoring/.env" 2>/dev/nul
 rsync -a --delete /opt/containers/monitoring/grafana/provisioning/ "$REPO/containers/monitoring/grafana/provisioning/" 2>/dev/null || true
 
 # .env secrets files (sensitive — repo must remain private)
-for svc in arr code-server immich openclaw; do
+for svc in arr code-server immich openclaw finance-scraper; do
   [ -f "/opt/containers/$svc/.env" ] && cp "/opt/containers/$svc/.env" "$REPO/containers/$svc/.env"
 done
 
@@ -76,6 +82,7 @@ cp /etc/fstab "$REPO/system/fstab"
 cp /etc/samba/smb.conf "$REPO/system/smb.conf"
 cp /etc/cron.d/container-healthcheck "$REPO/system/cron.d/" 2>/dev/null || true
 cp /etc/cron.d/peachhouse-maintenance "$REPO/system/cron.d/"
+cp /etc/cron.d/finance-scraper "$REPO/system/cron.d/" 2>/dev/null || true
 
 # --- Home Assistant (via SSH — HA add-on doesn't support SFTP, use tar over SSH) ---
 # secrets.yaml excluded; custom_sentences/ included
