@@ -1,2 +1,2 @@
-# Scrape Aegon Retiready pension value daily at 7am
-0 7 * * * root cd /opt/containers/finance-scraper && docker-compose run --rm finance-scraper >> /var/log/finance-scraper.log 2>&1
+# Scrape Aegon Retiready pension value twice daily (7am and 7pm) to keep session alive
+0 7,19 * * * root cd /opt/containers/finance-scraper && docker-compose run --rm finance-scraper >> /var/log/finance-scraper.log 2>&1

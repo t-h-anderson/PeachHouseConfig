@@ -54,6 +54,10 @@ for f in scraper.py monzo.py Dockerfile import-session.py compose.yml .env.examp
   [ -f "/opt/containers/finance-scraper/$f" ] && cp "/opt/containers/finance-scraper/$f" "$REPO/containers/finance-scraper/$f"
 done
 
+# finance-manual prom file (manually entered values — would be lost if not backed up)
+mkdir -p "$REPO/textfiles"
+[ -f /opt/textfiles/finance_manual.prom ] && cp /opt/textfiles/finance_manual.prom "$REPO/textfiles/finance_manual.prom"
+
 # signal-adapter source
 mkdir -p "$REPO/containers/signal-adapter"
 cp /opt/containers/signal-adapter/adapter.py "$REPO/containers/signal-adapter/adapter.py" 2>/dev/null || true

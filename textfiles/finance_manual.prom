@@ -1,0 +1,4 @@
+# HELP finance_account_balance_gbp Account balance in GBP
+# TYPE finance_account_balance_gbp gauge
+finance_account_balance_gbp{provider="coop",account="joint"} 144.04
+finance_account_balance_gbp{provider="coop",account="personal"} 98.27

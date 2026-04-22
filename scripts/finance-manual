@@ -1,0 +1,198 @@
+#!/usr/bin/env python3
+import sys
+import re
+from pathlib import Path
+
+PROM_FILE = Path("/opt/textfiles/finance_manual.prom")
+
+# Files written by automated scrapers — their entries take precedence over manual ones.
+# If a manual entry clashes with any of these, it is silently dropped on save.
+SCRAPER_FILES = [
+    Path("/opt/textfiles/finance.prom"),
+    Path("/opt/textfiles/finance_monzo.prom"),
+]
+
+METRIC_MAP = {
+    "pension": "finance_pension_value_gbp",
+    "balance": "finance_account_balance_gbp",
+    "isa":     "finance_isa_value_gbp",
+}
+
+HELP_TEXT = {
+    "finance_pension_value_gbp":   "Manually entered pension pot value in GBP",
+    "finance_account_balance_gbp": "Account balance in GBP",
+    "finance_isa_value_gbp":       "ISA value in GBP",
+}
+
+
+def parse_entries(text):
+    entries = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        m = re.match(r'(\w+)\{provider="([^"]+)",account="([^"]+)"\}\s+([\d.]+)', line)
+        if m:
+            entries.append((m.group(1), m.group(2), m.group(3), float(m.group(4))))
+    return entries
+
+
+def render(entries):
+    by_metric = {}
+    for metric, provider, account, value in entries:
+        by_metric.setdefault(metric, []).append((provider, account, value))
+
+    lines = []
+    for metric in sorted(by_metric):
+        lines.append(f"# HELP {metric} {HELP_TEXT.get(metric, metric)}")
+        lines.append(f"# TYPE {metric} gauge")
+        for provider, account, value in sorted(by_metric[metric]):
+            lines.append(f'{metric}{{provider="{provider}",account="{account}"}} {value:g}')
+    return "\n".join(lines) + ("\n" if lines else "")
+
+
+def load():
+    if PROM_FILE.exists():
+        return parse_entries(PROM_FILE.read_text())
+    return []
+
+
+def scraper_owned():
+    """Return set of (metric, provider, account) tuples present in any scraper file."""
+    owned = set()
+    for f in SCRAPER_FILES:
+        if f.exists():
+            for metric, provider, account, _ in parse_entries(f.read_text()):
+                owned.add((metric, provider, account))
+    return owned
+
+
+def save(entries):
+    """Write entries, dropping any whose labels are already in a scraper file.
+
+    Returns the list of dropped entries so callers can warn the user.
+    """
+    owned = scraper_owned()
+    dropped = [(m, p, a, v) for m, p, a, v in entries if (m, p, a) in owned]
+    clean   = [(m, p, a, v) for m, p, a, v in entries if (m, p, a) not in owned]
+    PROM_FILE.write_text(render(clean))
+    return dropped
+
+
+def cmd_add(args):
+    if len(args) != 4:
+        print("Usage: finance-manual add <type> <provider> <account> <value>")
+        print("  type: pension | balance | isa")
+        sys.exit(1)
+    type_, provider, account, raw_value = args
+    if type_ not in METRIC_MAP:
+        print(f"Unknown type '{type_}'. Choose: {', '.join(METRIC_MAP)}")
+        sys.exit(1)
+    try:
+        value = float(raw_value)
+    except ValueError:
+        print(f"Invalid value '{raw_value}' — must be a number")
+        sys.exit(1)
+
+    metric = METRIC_MAP[type_]
+    entries = load()
+    entries = [(m, p, a, v) for m, p, a, v in entries
+               if not (m == metric and p == provider and a == account)]
+    entries.append((metric, provider, account, value))
+    dropped = save(entries)
+
+    if any(m == metric and p == provider and a == account for m, p, a, _ in dropped):
+        print(f"Skipped — {metric}{{provider=\"{provider}\",account=\"{account}\"}} is already written by a scraper.")
+        print("  Scraper value takes precedence. To override, stop the scraper first.")
+        sys.exit(1)
+    else:
+        print(f"Set {metric}{{provider=\"{provider}\",account=\"{account}\"}} = £{value:,.2f}")
+
+
+def cmd_remove(args):
+    if len(args) != 3:
+        print("Usage: finance-manual remove <type> <provider> <account>")
+        sys.exit(1)
+    type_, provider, account = args
+    if type_ not in METRIC_MAP:
+        print(f"Unknown type '{type_}'. Choose: {', '.join(METRIC_MAP)}")
+        sys.exit(1)
+    metric = METRIC_MAP[type_]
+    entries = load()
+    filtered = [(m, p, a, v) for m, p, a, v in entries
+                if not (m == metric and p == provider and a == account)]
+    if len(filtered) == len(entries):
+        print(f"No entry found for {type_} {provider}/{account}")
+        sys.exit(1)
+    save(filtered)
+    print(f"Removed {metric}{{provider=\"{provider}\",account=\"{account}\"}}")
+
+
+def cmd_list(_args):
+    entries = load()
+    # Passive sync: drop any entries the scraper has since taken over.
+    dropped = save(entries)
+    if dropped:
+        print("Note: removed stale manual entries now managed by scrapers:")
+        for m, p, a, v in dropped:
+            print(f"  {m}{{provider=\"{p}\",account=\"{a}\"}} (was £{v:,.2f})")
+        print()
+        entries = load()
+
+    scraper_entries = []
+    for f in SCRAPER_FILES:
+        if f.exists():
+            scraper_entries.extend(parse_entries(f.read_text()))
+
+    if scraper_entries:
+        print("  [auto-scraped]")
+        for metric, provider, account, value in sorted(scraper_entries):
+            label = f'{metric}{{provider="{provider}",account="{account}"}}'
+            print(f"  {label:<65}  £{value:>12,.2f}")
+
+    if entries:
+        print()
+        print("  [manual]")
+        for metric, provider, account, value in sorted(entries):
+            label = f'{metric}{{provider="{provider}",account="{account}"}}'
+            print(f"  {label:<65}  £{value:>12,.2f}")
+    elif not scraper_entries:
+        print("No entries.")
+
+
+COMMANDS = {"add": cmd_add, "remove": cmd_remove, "list": cmd_list}
+
+
+def usage():
+    print("""Usage: finance-manual <command> [args]
+
+Commands:
+  add <type> <provider> <account> <value>   Add or update a manual entry
+  remove <type> <provider> <account>        Remove an entry
+  list                                       Show all manual entries (also cleans stale entries)
+
+Types:
+  pension   -> finance_pension_value_gbp
+  balance   -> finance_account_balance_gbp
+  isa       -> finance_isa_value_gbp
+
+Notes:
+  Scraper-managed entries take precedence. If a scraper already writes the same
+  metric + labels, the manual entry will be rejected (or silently dropped on sync).
+  Scraper files: finance.prom (Aegon), finance_monzo.prom (Monzo).
+
+Examples:
+  finance-manual add pension nest main 42000
+  finance-manual add balance coop current 1234.56
+  finance-manual add balance coop savings 5000
+  finance-manual add isa vanguard stocks-and-shares 9000
+  finance-manual remove balance coop current
+  finance-manual list
+""")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:
+        usage()
+        sys.exit(0 if len(sys.argv) > 1 and sys.argv[1] in ("-h", "--help") else 1)
+    COMMANDS[sys.argv[1]](sys.argv[2:])
