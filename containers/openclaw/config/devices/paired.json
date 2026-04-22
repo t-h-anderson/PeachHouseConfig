@@ -1,0 +1,87 @@
+{
+  "a7f0404ccb6bf042535a0da83323611e673ee929b1a81bb35c7802795b2e6b43": {
+    "deviceId": "a7f0404ccb6bf042535a0da83323611e673ee929b1a81bb35c7802795b2e6b43",
+    "publicKey": "ax5V3jeX9gawzUOEyLruxbFZiqSLRMWyUtVh8mB03nE",
+    "platform": "linux",
+    "clientId": "cli",
+    "clientMode": "cli",
+    "role": "operator",
+    "roles": [
+      "operator"
+    ],
+    "scopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing",
+      "operator.talk.secrets"
+    ],
+    "approvedScopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing",
+      "operator.talk.secrets"
+    ],
+    "tokens": {
+      "operator": {
+        "token": "KoEOOHElaS5Yk8YFQmvqElOy6Qkc2di2xyLCFBQ70oE",
+        "role": "operator",
+        "scopes": [
+          "operator.admin",
+          "operator.approvals",
+          "operator.pairing",
+          "operator.read",
+          "operator.talk.secrets",
+          "operator.write"
+        ],
+        "createdAtMs": 1775933268060
+      }
+    },
+    "createdAtMs": 1775933268060,
+    "approvedAtMs": 1775933268060
+  },
+  "465f44a071ce211cfbaf15044c98d7e520e1493fd306e60bd6e10ec2cc98c3f0": {
+    "deviceId": "465f44a071ce211cfbaf15044c98d7e520e1493fd306e60bd6e10ec2cc98c3f0",
+    "publicKey": "cwaVyUrJQp41e291gkn8kDiZpy3a8OJGKzvS8swYKdY",
+    "platform": "Win32",
+    "clientId": "openclaw-control-ui",
+    "clientMode": "webchat",
+    "role": "operator",
+    "roles": [
+      "operator"
+    ],
+    "scopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "approvedScopes": [
+      "operator.admin",
+      "operator.read",
+      "operator.write",
+      "operator.approvals",
+      "operator.pairing"
+    ],
+    "tokens": {
+      "operator": {
+        "token": "5RoSWp9xic0fG7TqgvwXs8KjTiJYUCtKEN2ftaCATBQ",
+        "role": "operator",
+        "scopes": [
+          "operator.admin",
+          "operator.approvals",
+          "operator.pairing",
+          "operator.read",
+          "operator.write"
+        ],
+        "createdAtMs": 1776839781213
+      }
+    },
+    "createdAtMs": 1776839781213,
+    "approvedAtMs": 1776839781213
+  }
+}

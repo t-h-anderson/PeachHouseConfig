@@ -30,8 +30,12 @@ cp /opt/containers/caddy/Dockerfile "$REPO/containers/caddy/"
 rsync -a --delete --exclude='logs/' /opt/containers/homepage/config/ "$REPO/containers/homepage/config/"
 
 # OpenClaw agent config (excludes runtime workspace)
-mkdir -p "$REPO/containers/openclaw/config"
+mkdir -p "$REPO/containers/openclaw/config/credentials"
+mkdir -p "$REPO/containers/openclaw/config/devices"
 cp /opt/containers/openclaw/config/openclaw.json "$REPO/containers/openclaw/config/" 2>/dev/null || true
+cp /opt/containers/openclaw/config/credentials/device-pairing.json "$REPO/containers/openclaw/config/credentials/" 2>/dev/null || true
+cp /opt/containers/openclaw/config/credentials/device-pair-pairing.json "$REPO/containers/openclaw/config/credentials/" 2>/dev/null || true
+cp /opt/containers/openclaw/config/devices/paired.json "$REPO/containers/openclaw/config/devices/" 2>/dev/null || true
 
 # desktop-bot source (it's a mini project, not just compose)
 mkdir -p "$REPO/containers/desktop-bot"

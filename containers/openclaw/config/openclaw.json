@@ -2,12 +2,12 @@
   "models": {
     "providers": {
       "ollama": {
-        "baseUrl": "http://192.168.68.16:11434",
+        "baseUrl": "http://100.74.78.70:11434",
         "api": "ollama",
         "models": [
           {
-            "id": "qwen2.5:1.5b-ctx32k",
-            "name": "Qwen 2.5 1.5B (server fallback)",
+            "id": "qwen2.5:7b",
+            "name": "Qwen 2.5 7B",
             "reasoning": false,
             "input": [
               "text"
@@ -22,13 +22,35 @@
             "maxTokens": 32768
           }
         ]
+      },
+      "ollamaOpenai": {
+        "baseUrl": "http://100.74.78.70:11434/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "gemma4:e4b",
+            "name": "Gemma 4 (e4b)",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 32768,
+            "maxTokens": 8192
+          }
+        ]
       }
     }
   },
   "agents": {
     "defaults": {
       "model": {
-        "primary": "ollama/qwen2.5:1.5b-ctx32k"
+        "primary": "ollama/qwen2.5:7b"
       },
       "compaction": {
         "reserveTokensFloor": 4096
@@ -44,7 +66,7 @@
   },
   "meta": {
     "lastTouchedVersion": "2026.4.15",
-    "lastTouchedAt": "2026-04-21T21:49:24.521Z"
+    "lastTouchedAt": "2026-04-22T00:00:00.000Z"
   },
   "gateway": {
     "controlUi": {
