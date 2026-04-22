@@ -18,6 +18,8 @@ METRIC_MAP = {
     "isa":     "finance_isa_value_gbp",
 }
 
+TYPE_MAP = {v: k for k, v in METRIC_MAP.items()}
+
 HELP_TEXT = {
     "finance_pension_value_gbp":   "Manually entered pension pot value in GBP",
     "finance_account_balance_gbp": "Account balance in GBP",
@@ -79,9 +81,22 @@ def save(entries):
     return dropped
 
 
+def scraper_file_for(metric, provider, account):
+    """Return the scraper file that owns this metric+labels, or None."""
+    for f in SCRAPER_FILES:
+        if f.exists():
+            for m, p, a, _ in parse_entries(f.read_text()):
+                if m == metric and p == provider and a == account:
+                    return f
+    return None
+
+
 def cmd_add(args):
+    force = "--force" in args
+    args = [a for a in args if a != "--force"]
+
     if len(args) != 4:
-        print("Usage: finance-manual add <type> <provider> <account> <value>")
+        print("Usage: finance-manual add [--force] <type> <provider> <account> <value>")
         print("  type: pension | balance | isa")
         sys.exit(1)
     type_, provider, account, raw_value = args
@@ -95,18 +110,34 @@ def cmd_add(args):
         sys.exit(1)
 
     metric = METRIC_MAP[type_]
+    owned_by = scraper_file_for(metric, provider, account)
+
+    if owned_by and not force:
+        print(f"Skipped — {metric}{{provider=\"{provider}\",account=\"{account}\"}} is managed by {owned_by.name}.")
+        print("  Use --force to write directly to the scraper file (e.g. when scraper is down).")
+        sys.exit(1)
+
+    if owned_by and force:
+        # Write into the scraper file directly so there's no duplicate.
+        # The next scraper run will overwrite this with the live value.
+        pattern = (
+            re.escape(metric) +
+            r'\{provider="' + re.escape(provider) + r'",account="' + re.escape(account) + r'"\}' +
+            r'\s+[\d.]+'
+        )
+        replacement = f'{metric}{{provider="{provider}",account="{account}"}} {value:g}'
+        text = owned_by.read_text()
+        owned_by.write_text(re.sub(pattern, replacement, text))
+        print(f"Set {metric}{{provider=\"{provider}\",account=\"{account}\"}} = £{value:,.2f}")
+        print(f"  Written to {owned_by.name} — scraper will resume adding readings when it next runs.")
+        return
+
     entries = load()
     entries = [(m, p, a, v) for m, p, a, v in entries
                if not (m == metric and p == provider and a == account)]
     entries.append((metric, provider, account, value))
-    dropped = save(entries)
-
-    if any(m == metric and p == provider and a == account for m, p, a, _ in dropped):
-        print(f"Skipped — {metric}{{provider=\"{provider}\",account=\"{account}\"}} is already written by a scraper.")
-        print("  Scraper value takes precedence. To override, stop the scraper first.")
-        sys.exit(1)
-    else:
-        print(f"Set {metric}{{provider=\"{provider}\",account=\"{account}\"}} = £{value:,.2f}")
+    save(entries)
+    print(f"Set {metric}{{provider=\"{provider}\",account=\"{account}\"}} = £{value:,.2f}")
 
 
 def cmd_remove(args):
@@ -128,6 +159,11 @@ def cmd_remove(args):
     print(f"Removed {metric}{{provider=\"{provider}\",account=\"{account}\"}}")
 
 
+def fmt_row(metric, provider, account, value):
+    type_ = TYPE_MAP.get(metric, metric)
+    return f"  {type_:<10}  {provider:<12}  {account:<24}  £{value:>12,.2f}"
+
+
 def cmd_list(_args):
     entries = load()
     # Passive sync: drop any entries the scraper has since taken over.
@@ -135,7 +171,7 @@ def cmd_list(_args):
     if dropped:
         print("Note: removed stale manual entries now managed by scrapers:")
         for m, p, a, v in dropped:
-            print(f"  {m}{{provider=\"{p}\",account=\"{a}\"}} (was £{v:,.2f})")
+            print(f"  {TYPE_MAP.get(m, m)} {p} {a} (was £{v:,.2f})")
         print()
         entries = load()
 
@@ -144,18 +180,24 @@ def cmd_list(_args):
         if f.exists():
             scraper_entries.extend(parse_entries(f.read_text()))
 
+    header = f"  {'type':<10}  {'provider':<12}  {'account':<24}  {'value':>14}"
+    divider = "  " + "-" * (len(header) - 2)
+
     if scraper_entries:
-        print("  [auto-scraped]")
-        for metric, provider, account, value in sorted(scraper_entries):
-            label = f'{metric}{{provider="{provider}",account="{account}"}}'
-            print(f"  {label:<65}  £{value:>12,.2f}")
+        print("[auto-scraped]")
+        print(header)
+        print(divider)
+        for row in sorted(scraper_entries):
+            print(fmt_row(*row))
 
     if entries:
-        print()
-        print("  [manual]")
-        for metric, provider, account, value in sorted(entries):
-            label = f'{metric}{{provider="{provider}",account="{account}"}}'
-            print(f"  {label:<65}  £{value:>12,.2f}")
+        if scraper_entries:
+            print()
+        print("[manual]")
+        print(header)
+        print(divider)
+        for row in sorted(entries):
+            print(fmt_row(*row))
     elif not scraper_entries:
         print("No entries.")
 
