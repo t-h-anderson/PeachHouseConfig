@@ -10,3 +10,13 @@ services:
       - /opt/textfiles:/opt/textfiles
       - ./state:/state
     env_file: .env
+
+  finance-receiver:
+    build: ./receiver
+    container_name: finance-receiver
+    restart: unless-stopped
+    ports:
+      - "9107:9107"
+    volumes:
+      - /opt/textfiles:/opt/textfiles
+    env_file: .env

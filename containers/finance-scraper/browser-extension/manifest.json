@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Finance Sync",
+  "version": "1.0.0",
+  "description": "Pushes Aegon and Co-op balances to home server on login",
+  "permissions": ["storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://retiready.co.uk/secure/*"],
+      "js": ["content/aegon.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.co-operativebank.co.uk/*",
+        "https://digital.co-operativebank.co.uk/*",
+        "https://online.co-operativebank.co.uk/*"
+      ],
+      "js": ["content/coop.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Finance Sync"
+  }
+}
