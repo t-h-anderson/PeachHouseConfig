@@ -76,7 +76,7 @@ cp /opt/containers/monitoring/.env "$REPO/containers/monitoring/.env" 2>/dev/nul
 rsync -a --delete /opt/containers/monitoring/grafana/provisioning/ "$REPO/containers/monitoring/grafana/provisioning/" 2>/dev/null || true
 
 # .env secrets files (sensitive — repo must remain private)
-for svc in arr code-server immich openclaw finance-scraper; do
+for svc in arr code-server immich openclaw finance-scraper nextcloud; do
   [ -f "/opt/containers/$svc/.env" ] && cp "/opt/containers/$svc/.env" "$REPO/containers/$svc/.env"
 done
 
@@ -103,6 +103,12 @@ ssh -i /root/.ssh/id_rsa tomhanderson@192.168.68.62 \
   "tar -czf - -C /homeassistant \
     --exclude=secrets.yaml \
     automations.yaml configuration.yaml scripts.yaml scenes.yaml custom_sentences/" \
+  2>/dev/null | tar -xzf - -C "$REPO/homeassistant/" 2>/dev/null || true
+
+# ESPHome device configs (stored in /config/esphome/ on HAOS VM)
+mkdir -p "$REPO/homeassistant/esphome"
+ssh -i /root/.ssh/id_rsa tomhanderson@192.168.68.62 \
+  "tar -czf - -C /config esphome/" \
   2>/dev/null | tar -xzf - -C "$REPO/homeassistant/" 2>/dev/null || true
 
 # --- Claude Code global config (~/.claude/) ---

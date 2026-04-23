@@ -59,6 +59,10 @@ http://grafana.ph {
     reverse_proxy localhost:3000
 }
 
+http://nextcloud.ph {
+    reverse_proxy localhost:8096
+}
+
 # ── peach-house.uk (HTTPS via Cloudflare DNS-01) ──────────────────────────────
 
 home.peach-house.uk {
@@ -125,4 +129,9 @@ openclaw.peach-house.uk {
 grafana.peach-house.uk {
     import cf_tls
     reverse_proxy localhost:3000
+}
+
+files.peach-house.uk {
+    import cf_tls
+    reverse_proxy localhost:8096
 }

@@ -196,6 +196,9 @@ filtering:
     - domain: grafana.ph
       answer: 192.168.68.16
       enabled: true
+    - domain: nextcloud.ph
+      answer: 192.168.68.16
+      enabled: true
   safe_fs_patterns:
     - /opt/adguardhome/work/userfilters/*
   safebrowsing_cache_size: 1048576

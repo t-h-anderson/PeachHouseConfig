@@ -1,0 +1,48 @@
+esphome:
+  name: atoms3d2
+  friendly_name: ATOMS3 Front bedroom - D2
+  min_version: 2025.11.0
+  name_add_mac_suffix: false
+
+esp32:
+    board: esp32-s3-devkitc-1
+    variant: esp32s3
+    framework:
+      type: esp-idf
+
+logger:
+api:
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+bluetooth_proxy:
+  active: true
+
+light:
+  - platform: esp32_rmt_led_strip
+    pin: GPIO35
+    num_leds: 4
+    rgb_order: GRB
+    chipset: WS2812
+    name: "LED"
+    restore_mode: RESTORE_DEFAULT_OFF
+    effects:
+      - pulse:
+      - strobe:
+      - random:
+
+binary_sensor:
+  - platform: gpio
+    name: "Button"
+    pin:
+      number: GPIO41
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+    filters:
+      - delayed_off: 10ms

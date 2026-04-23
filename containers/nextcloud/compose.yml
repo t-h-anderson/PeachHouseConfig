@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  nextcloud-db:
+    image: postgres:16
+    container_name: nextcloud-db
+    restart: unless-stopped
+    privileged: true
+    environment:
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: nextcloud
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - /mnt/peach_storage/nextcloud/postgres:/var/lib/postgresql/data
+    networks:
+      - nextcloud-net
+
+  nextcloud-redis:
+    image: redis:alpine
+    container_name: nextcloud-redis
+    restart: unless-stopped
+    privileged: true
+    networks:
+      - nextcloud-net
+
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "8096:80"
+    environment:
+      POSTGRES_HOST: nextcloud-db
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: nextcloud
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USER}
+      NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
+      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.ph files.peach-house.uk 192.168.68.16 100.119.249.10
+      NEXTCLOUD_DATA_DIR: /data
+      REDIS_HOST: nextcloud-redis
+      OVERWRITECLIURL: https://files.peach-house.uk
+      OVERWRITEPROTOCOL: https
+      TRUSTED_PROXIES: 172.16.0.0/12
+    volumes:
+      - ./nextcloud-html:/var/www/html
+      - /mnt/peach_storage/nextcloud/data:/data
+    networks:
+      - nextcloud-net
+    depends_on:
+      - nextcloud-db
+      - nextcloud-redis
+
+networks:
+  nextcloud-net:
+    driver: bridge

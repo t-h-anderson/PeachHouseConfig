@@ -12,7 +12,7 @@ fail() {
   exit 1
 }
 
-containers=("adguard-adguard-1" "caddy-caddy-1" "homepage" "immich-server" "immich-postgres" "immich-redis" "immich-machine-learning" "plex" "signal-signal-api-1" "syncthing-syncthing-1" "gluetun" "qbittorrent" "prowlarr" "radarr" "sonarr" "overseerr" "bazarr" "code-server")
+containers=("adguard-adguard-1" "caddy-caddy-1" "homepage" "immich-server" "immich-postgres" "immich-redis" "immich-machine-learning" "plex" "signal-signal-api-1" "syncthing-syncthing-1" "gluetun" "qbittorrent" "prowlarr" "radarr" "sonarr" "overseerr" "bazarr" "code-server" "nextcloud" "nextcloud-db" "nextcloud-redis")
 for c in "${containers[@]}"; do
   if ! docker inspect --format='{{.State.Running}}' "$c" 2>/dev/null | grep -q true; then
     fail "container '$c' is down!"
