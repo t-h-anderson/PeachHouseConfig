@@ -30,12 +30,6 @@ if ! tailscale status --json 2>/dev/null | grep -q '"BackendState": "Running"'; 
   fail "Tailscale is not connected!"
 fi
 
-# Signal backup freshness: alert if no backup in last 14 days
-latest_backup=$(find /mnt/peach_storage/syncthing/signal-backups -name "*.backup" -mtime -14 2>/dev/null | sort | tail -1)
-if [ -z "$latest_backup" ]; then
-  fail "no Signal backup in the last 14 days!"
-fi
-
 # Ollama (Server) only — desktop GPU proxy (11435) is on-demand, not monitored
 if ! curl -fsS -m 5 "http://localhost:11434/api/tags" > /dev/null 2>&1; then
   fail "Ollama (Server) is not reachable!"

@@ -15,20 +15,19 @@
     data:
       message: '⚠️ peachhouse: server power draw near 0W — may have crashed'
   mode: single
-
 - alias: Heartbeat
   triggers:
   - trigger: time_pattern
-    minutes: "/5"
+    minutes: /5
   actions:
   - action: rest_command.heartbeat
   mode: single
-
+  id: fc642182c35441faa098c05735a2a750
 - alias: Frost Warning
   id: frost_warning_signal
   triggers:
   - trigger: time
-    at: "20:00:00"
+    at: '20:00:00'
   actions:
   - action: weather.get_forecasts
     target:
@@ -37,19 +36,59 @@
       type: daily
     response_variable: forecast_data
   - condition: template
-    value_template: >
-      {% set fc = forecast_data['weather.forecast_home'].forecast %}
-      {{ fc[0].templow < 1 or fc[1].templow < 1 }}
+    value_template: '{% set fc = forecast_data[''weather.forecast_home''].forecast
+      %} {{ fc[0].templow < 1 or fc[1].templow < 1 }}
+
+      '
   - action: notify.signal_tom
     data:
-      message: >
-        {% set fc = forecast_data['weather.forecast_home'].forecast %}
-        {% set ns = namespace(parts=[]) %}
-        {% for i in range(2) %}
-          {% if fc[i].templow < 1 %}
-            {% set label = 'tonight' if i == 0 else 'tomorrow night' %}
-            {% set ns.parts = ns.parts + [label ~ ' (' ~ fc[i].templow | round(1) ~ '°C)'] %}
-          {% endif %}
-        {% endfor %}
-        🌡️ Frost warning for Waterbeach: low below 1°C {{ ns.parts | join(' and ') }}.
+      message: "{% set fc = forecast_data['weather.forecast_home'].forecast %} {%
+        set ns = namespace(parts=[]) %} {% for i in range(2) %}\n  {% if fc[i].templow
+        < 1 %}\n    {% set label = 'tonight' if i == 0 else 'tomorrow night' %}\n
+        \   {% set ns.parts = ns.parts + [label ~ ' (' ~ fc[i].templow | round(1)
+        ~ '°C)'] %}\n  {% endif %}\n{% endfor %} \U0001F321️ Frost warning for Waterbeach:
+        low below 1°C {{ ns.parts | join(' and ') }}.\n"
+  mode: single
+- id: '1777046685039'
+  alias: ATOM D1 button toggles LED
+  description: ''
+  triggers:
+  - entity_id: binary_sensor.atoms3_living_room_d1_button
+    to: 'on'
+    trigger: state
+  actions:
+  - action: light.toggle
+    target:
+      entity_id: light.atoms3_living_room_d1_led
+- id: '1777046801781'
+  alias: ATOM D2 button toggles LED
+  description: ''
+  triggers:
+  - entity_id:
+    - binary_sensor.atoms3_device_2_button
+    to:
+    - 'on'
+    trigger: state
+  conditions: []
+  actions:
+  - action: light.toggle
+    target:
+      entity_id: light.atoms3_device_2_led
+    data: {}
+  mode: single
+- id: '1777046862924'
+  alias: ATOM D3 button toggles LED
+  description: ''
+  triggers:
+  - entity_id:
+    - binary_sensor.atoms3_device_3_button
+    to:
+    - 'on'
+    trigger: state
+  conditions: []
+  actions:
+  - action: light.toggle
+    target:
+      entity_id: light.atoms3_device_3_led
+    data: {}
   mode: single
