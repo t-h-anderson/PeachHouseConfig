@@ -1,10 +1,10 @@
 # HELP finance_account_balance_gbp Account balance in GBP
 # TYPE finance_account_balance_gbp gauge
-finance_account_balance_gbp{provider="coop",account="credit"} -1927.13
-finance_account_balance_gbp{provider="coop",account="joint"} 3194.28
+finance_account_balance_gbp{provider="coop",account="credit"} -2057.05
+finance_account_balance_gbp{provider="coop",account="joint"} 2694.28
 finance_account_balance_gbp{provider="coop",account="personal"} 98.27
 finance_account_balance_gbp{provider="coop",account="saving_366"} 2500
 # HELP finance_isa_value_gbp ISA value in GBP
 # TYPE finance_isa_value_gbp gauge
-finance_isa_value_gbp{provider="monzo",account="adventurous"} 2521.04
-finance_isa_value_gbp{provider="monzo",account="european"} 18.54
+finance_isa_value_gbp{provider="monzo",account="adventurous"} 2542.34
+finance_isa_value_gbp{provider="monzo",account="european"} 18.45

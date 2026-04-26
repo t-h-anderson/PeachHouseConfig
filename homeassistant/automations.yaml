@@ -92,3 +92,16 @@
       entity_id: light.atoms3_device_3_led
     data: {}
   mode: single
+- id: '1777147547233'
+  alias: Plant timelapse capture
+  triggers:
+  - minutes: /5
+    trigger: time_pattern
+  actions:
+  - target:
+      entity_id: camera.conservatory_conservatory_camera
+    data:
+      filename: /media/Timelapse/timelapse/plant_{{ now().strftime('%Y%m%d_%H%M%S')
+        }}.jpg
+    action: camera.snapshot
+  mode: single
