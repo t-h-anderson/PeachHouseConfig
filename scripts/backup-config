@@ -35,6 +35,8 @@ mkdir -p "$REPO/containers/openclaw/config/devices"
 cp /opt/containers/openclaw/config/openclaw.json "$REPO/containers/openclaw/config/" 2>/dev/null || true
 cp /opt/containers/openclaw/config/credentials/device-pairing.json "$REPO/containers/openclaw/config/credentials/" 2>/dev/null || true
 cp /opt/containers/openclaw/config/credentials/device-pair-pairing.json "$REPO/containers/openclaw/config/credentials/" 2>/dev/null || true
+cp /opt/containers/openclaw/config/credentials/signal-default-allowFrom.json "$REPO/containers/openclaw/config/credentials/" 2>/dev/null || true
+cp /opt/containers/openclaw/config/credentials/telegram-default-allowFrom.json "$REPO/containers/openclaw/config/credentials/" 2>/dev/null || true
 cp /opt/containers/openclaw/config/devices/paired.json "$REPO/containers/openclaw/config/devices/" 2>/dev/null || true
 
 # desktop-bot source (it's a mini project, not just compose)

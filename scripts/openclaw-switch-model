@@ -18,20 +18,26 @@ AGENT_MODELS_PATH = "/opt/containers/openclaw/config/agents/main/agent/models.js
 COMPOSE_DIR = "/opt/containers/openclaw"
 
 DESKTOP = {
-    "baseUrl": "http://100.74.78.70:11434",
-    "modelId": "qwen2.5:7b",
-    "modelName": "Qwen 2.5 7B",
+    "provider": "ollamaOpenai",
+    "baseUrl": "http://100.74.78.70:11434/v1",
+    "api": "openai-completions",
+    "modelId": "gemma4:e4b",
+    "modelName": "Gemma 4 (e4b)",
     "contextWindow": 32768,
     "maxTokens": 32768,
 }
 
 SERVER = {
+    "provider": "ollama",
     "baseUrl": "http://192.168.68.16:11434",
+    "api": "ollama",
     "modelId": "qwen2.5:1.5b-ctx32k",
     "modelName": "Qwen 2.5 1.5B (server fallback)",
     "contextWindow": 32768,
     "maxTokens": 32768,
 }
+
+DESKTOP_REACHABLE_URL = "http://100.74.78.70:11434/api/tags"
 
 
 def log(msg):
@@ -40,9 +46,7 @@ def log(msg):
 
 def desktop_reachable():
     try:
-        req = urllib.request.urlopen(
-            f"{DESKTOP['baseUrl']}/api/tags", timeout=5
-        )
+        req = urllib.request.urlopen(DESKTOP_REACHABLE_URL, timeout=5)
         return req.status == 200
     except Exception:
         return False
@@ -64,6 +68,7 @@ def get_current_model(config):
 
 
 def apply_target(target):
+    provider = target["provider"]
     model_entry = {
         "id": target["modelId"],
         "name": target["modelName"],
@@ -76,15 +81,15 @@ def apply_target(target):
 
     # Update main config
     config = read_config(CONFIG_PATH)
-    config["models"]["providers"]["ollama"]["baseUrl"] = target["baseUrl"]
-    config["models"]["providers"]["ollama"]["models"] = [model_entry]
-    config["agents"]["defaults"]["model"]["primary"] = f"ollama/{target['modelId']}"
+    config["models"]["providers"][provider]["baseUrl"] = target["baseUrl"]
+    config["models"]["providers"][provider]["models"] = [model_entry]
+    config["agents"]["defaults"]["model"]["primary"] = f"{provider}/{target['modelId']}"
     write_config(CONFIG_PATH, config)
 
     # Update agent-level models.json
     agent_models = read_config(AGENT_MODELS_PATH)
-    agent_models["providers"]["ollama"]["baseUrl"] = target["baseUrl"]
-    agent_models["providers"]["ollama"]["models"] = [{**model_entry, "api": "ollama"}]
+    agent_models["providers"][provider]["baseUrl"] = target["baseUrl"]
+    agent_models["providers"][provider]["models"] = [{**model_entry, "api": target["api"]}]
     write_config(AGENT_MODELS_PATH, agent_models)
 
 
@@ -102,23 +107,26 @@ def main():
     current = get_current_model(config)
     reachable = desktop_reachable()
 
-    on_desktop = current == f"ollama/{DESKTOP['modelId']}"
-    on_server = current == f"ollama/{SERVER['modelId']}"
+    desktop_model_key = f"{DESKTOP['provider']}/{DESKTOP['modelId']}"
+    server_model_key = f"{SERVER['provider']}/{SERVER['modelId']}"
+
+    on_desktop = current == desktop_model_key
+    on_server = current == server_model_key
 
     if reachable and on_desktop:
-        log(f"Desktop reachable, already on desktop model — no change.")
+        log("Desktop reachable, already on desktop model — no change.")
         return
     if not reachable and on_server:
-        log(f"Desktop unreachable, already on server fallback — no change.")
+        log("Desktop unreachable, already on server fallback — no change.")
         return
 
     if reachable and not on_desktop:
-        log(f"Desktop came back online. Switching from {current} → {DESKTOP['modelId']}")
+        log(f"Desktop came back online. Switching from {current} → {desktop_model_key}")
         apply_target(DESKTOP)
         restart_gateway()
         log("Switched to desktop GPU model.")
     elif not reachable and not on_server:
-        log(f"Desktop unreachable. Switching from {current} → {SERVER['modelId']}")
+        log(f"Desktop unreachable. Switching from {current} → {server_model_key}")
         apply_target(SERVER)
         restart_gateway()
         log("Switched to server CPU fallback.")

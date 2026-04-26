@@ -50,9 +50,54 @@
         text: "Playing your morning summary."
       action:
         - action: script.morning_summary
+
   google:
     client_id: !secret google_client_id
     client_secret: !secret google_client_secret
 
+  template:
+    - sensor:
+        - name: "Living Room Front Radiator Power"
+          unique_id: living_room_front_radiator_power
+          unit_of_measurement: "W"
+          device_class: power
+          state_class: measurement
+          state: "{{ 1800 if states('climate.living_room_front') == 'heat' else 0 }}"
+
+        - name: "Living Room Rear Radiator Power"
+          unique_id: living_room_rear_radiator_power
+          unit_of_measurement: "W"
+          device_class: power
+          state_class: measurement
+          state: "{{ 1800 if states('climate.living_room_rear') == 'heat' else 0 }}"
+
+        - name: "Radiators Power"
+          unique_id: radiators_power_total
+          unit_of_measurement: "W"
+          device_class: power
+          state_class: measurement
+          state: >
+            {% set front = 1800 if states('climate.living_room_front') == 'heat' else 0 %}
+            {% set rear = 1800 if states('climate.living_room_rear') == 'heat' else 0 %}
+            {{ front + rear }}
+
+  sensor:
+    - platform: integration
+      source: sensor.radiators_power
+      name: "Radiators Energy"
+      unique_id: radiators_energy_total
+      unit_prefix: k
+      round: 3
+      method: left
+
+  utility_meter:
+    server_energy_daily:
+      source: sensor.servershelly_energy
+      name: "Server Energy Daily"
+      cycle: daily
+    radiators_energy_daily:
+      source: sensor.radiators_energy
+      name: "Radiators Energy Daily"
+      cycle: daily
+
   prometheus:
-  
