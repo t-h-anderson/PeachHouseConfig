@@ -6,8 +6,8 @@
         "api": "ollama",
         "models": [
           {
-            "id": "qwen2.5:7b",
-            "name": "Qwen 2.5 7B",
+            "id": "gemma4:e4b",
+            "name": "Gemma 4 (e4b)",
             "reasoning": false,
             "input": [
               "text"
@@ -20,17 +20,10 @@
             },
             "contextWindow": 32768,
             "maxTokens": 32768
-          }
-        ]
-      },
-      "ollamaOpenai": {
-        "baseUrl": "http://100.74.78.70:11434/v1",
-        "api": "openai-completions",
-        "apiKey": "ollama",
-        "models": [
+          },
           {
-            "id": "gemma4:e4b",
-            "name": "Gemma 4 (e4b)",
+            "id": "qwen2.5:7b",
+            "name": "Qwen 2.5 7B",
             "reasoning": false,
             "input": [
               "text"
@@ -51,7 +44,7 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "ollamaOpenai/gemma4:e4b"
+        "primary": "ollama/gemma4:e4b"
       },
       "compaction": {
         "reserveTokensFloor": 4096

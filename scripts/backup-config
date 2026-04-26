@@ -63,6 +63,12 @@ mkdir -p "$REPO/textfiles"
 mkdir -p "$REPO/containers/signal-adapter"
 cp /opt/containers/signal-adapter/adapter.py "$REPO/containers/signal-adapter/adapter.py" 2>/dev/null || true
 
+# photo-labelling pipeline scripts (top-level only; PhotoLabelling/ subdir is a git repo)
+mkdir -p "$REPO/photo-labelling"
+find /opt/photo-labelling -maxdepth 1 -name '*.py' | while read -r f; do
+  cp "$f" "$REPO/photo-labelling/$(basename "$f")"
+done
+
 # signalbackup-tools Dockerfile
 mkdir -p "$REPO/containers/signalbackup-tools"
 cp /opt/containers/signalbackup-tools/Dockerfile "$REPO/containers/signalbackup-tools/"

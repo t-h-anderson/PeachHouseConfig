@@ -13,7 +13,13 @@
       "Bash(tmux capture-pane *)",
       "Bash(tmux send-keys *)",
       "Bash(tmux kill-session *)",
-      "Bash(tmux new-session *)"
+      "Bash(tmux new-session *)",
+      "Bash(python3 *)",
+      "Bash(cp /opt/photo-labelling/output/vocabulary_mapping.json.bak /opt/photo-labelling/output/vocabulary_mapping.json)",
+      "Bash(echo \"Restored mapping file \\($\\(python3 -c \"import json; m=json.load\\(open\\('/opt/photo-labelling/output/vocabulary_mapping.json'\\)\\); print\\(len\\(m\\),'entries'\\)\"\\)\\)\")",
+      "Bash(curl -s --max-time 5 http://100.74.78.70:11434/api/tags)",
+      "Read(//usr/local/bin/**)",
+      "Bash(backup-config)"
     ]
   }
 }
